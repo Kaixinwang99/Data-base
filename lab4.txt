@@ -1,0 +1,60 @@
+SQL 0
+select w.ownername
+from owners as w
+
+SQL 1
+select w.*
+from owners as w
+where w.phone is null or w.phone like '0141%'
+
+SQL 2
+select b.breedname, d.dogname
+from breeds as b, dogs as d
+where d.breedname = b.breedname
+order by b.breedname
+
+SQL 3
+select k.kennelname, d.dogname
+from kennels as k , dogs as d 
+where d.kennelname  = k.kennelname and
+(d.dogname = d.fathername or d.dogname = d.mothername or d.mothername is null)
+
+SQL 4
+select d.dogname,  b.breedname
+from dogs as d, breeds as b
+where d.breedname = b.breedname
+order by d.dogname
+
+SQL 5
+select s.showname, d.dogid, w.ownername
+from shows as s, dogs as d, owners as w, attendance as a
+where  d.dogid = a.dogid and a.showname = s.showname and d.ownerid = w.ownerid
+and a.opendate = s.opendate
+order by s.showname
+
+SQL 6
+select k.address, w.phone
+from kennels as k , owners as w , attendance as a , dogs as d 
+where d.kennelname = k.kennelname and d.ownerid = w.ownerid 
+and d.dogid = a.dogid and a.place = 1
+
+SQL 7
+select w.*
+from dogs as d, owners as w, kennels as k
+where d.ownerid = w.ownerid and d.kennelname = k.kennelname
+and k.address is null
+
+SQL 8
+select d.dogname
+from dogs as d, owners as w
+where d.ownerid = w.ownerid and d.dogname <> 'Laser'
+and w.ownerid = (
+	select w.ownerid
+	from owners as w ,dogs as d
+	where d.ownerid = w.ownerid and d.dogname = 'Laser'
+)
+
+SQL 9
+select distinct(d1.dogname, d2.dogname)
+from dogs as d1 , dogs as d2
+where d1.ownerid = d2.ownerid and d1.dogid < d2.dogid

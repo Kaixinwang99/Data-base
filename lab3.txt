@@ -1,0 +1,44 @@
+create table breeds
+	(breedname	VARCHAR(64)	not null,
+	 primary key(breedname),
+	 unique(breedname)
+	);
+
+create table kennels
+	(kennelname	VARCHAR(64)	not null,
+	 address	VARCHAR(64)	not null,
+	 phone		VARCHAR(16) not null,
+	 primary key(kennelname),
+	 unique(kennelname)
+	);
+
+create table shows
+	(showname VARCHAR(64) not null,
+	 opendate VARCHAR(12) not null,
+	 closedate	VARCHAR(12) not null,
+	 primary key(showname,opendate)
+	);、
+
+CREATE TABLE dogs
+	(dogid		INT		NOT NULL,
+	 Dname		VARCHAR(32)		NOT NULL,
+	 ownerid	INT			NOT NULL,
+	 kennelname VARCHAR(64) NOT NULL,
+	 breedname	VARCHAR(64)	NOT NULL,
+	 mothername	VARCHAR(64),
+	 fathername	VARCHAR(64),
+	 PRIMARY KEY(dogid),
+	 unique(dogid),
+	 foreign key(ownerid)references Owners(ownerid),
+	 foreign key(kennelname)references kennels(kennelname),
+	 foreign key(breedname)references breeds(breedname));
+
+create table attendance
+	(dogid	INT not null,
+	 showname VARCHAR(64) not null,
+	 opendate VARCHAR(12) not null,
+	 place	INT	,
+	 primary key(dogid,showname,opendate),
+	 foreign key(dogid)references dogs(dogid),
+	 foreign key(showname, opendate)references shows(showname, opendate)
+	);
